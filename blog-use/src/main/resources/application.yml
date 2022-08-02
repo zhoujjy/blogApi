@@ -1,0 +1,41 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: Blog
+  datasource:
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    password: jy010711
+    host: localhost
+  servlet:
+    multipart:
+      # 上传文件总的最大值
+      max-request-size: 20MB
+      # 单个文件的最大值
+      max-file-size: 2MB
+mybatis-plus:
+  configuration:
+    # 日志打印
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 驼峰开启
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      # 表的前缀，实体就不需要带前缀了
+      table-prefix: bl_
+      # 逻辑删除字段名
+      logic-delete-field: deleted
+      # 逻辑删除字面值：未删除为0
+      logic-not-delete-value: 0
+      # 逻辑删除字面值：删除为1
+      logic-delete-value: 1
+qiniu:
+  accessKey: 8zKlrPZ4Kvap_RLUDofLAIkXpeXpfbgNa2BJiCja
+  accessSecretKey: kEUAXi2eVSQzaAeDAhcBHDp4Lmh656fhPnXV0UnD
+  bucket: 1378894054-blog
+blog-config:
+  tokenTTL: 20 # 分钟

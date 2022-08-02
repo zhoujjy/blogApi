@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zj.mapper.ArticleMapper">
+
+
+    <select id="listArticle" parameterType="com.zj.Dto.params.PageParams" resultType="com.zj.entity.Article">
+        SELECT
+            *
+        FROM
+            bl_article
+        WHERE
+            deleted = 0
+        <if test="pageParams.categoryId != null">
+            and category_id = #{pageParams.categoryId}
+        </if>
+        <if test="pageParams.tagId != null">
+            and id in (SELECT article_id FROM bl_article_tag WHERE tag_id = #{pageParams.tagId} )
+        </if>
+        <if test="pageParams.year!=null and pageParams.year!='' and pageParams.month!=null and pageParams!=''">
+            and year(create_date) = #{pageParams.year} and month(create_date) = #{pageParams.month}
+        </if>
+        ORDER BY
+            weight DESC,create_date DESC
+    </select>
+
+    <select id="listArchives" resultType="com.zj.Dto.ArchivesDto">
+        SELECT
+            YEAR(create_date) as year,MONTH(create_date) as month,count(*) as count
+        FROM
+            bl_article
+        WHERE
+            deleted = 0
+        GROUP BY
+            year,month
+    </select>
+</mapper>

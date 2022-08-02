@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zj.mapper.MenuMapper">
+
+
+    <select id="selectPermsByUserId" parameterType="integer" resultType="com.zj.entity.Menu">
+        SELECT
+            menu_key
+        FROM
+            bl_user_role as ur,
+            bl_role_menu as rm,
+            bl_menu as me
+        WHERE
+            ur.role_id = rm.role_id AND
+            rm.menu_id = me.id AND
+            ur.user_id = #{id}
+    </select>
+</mapper>
